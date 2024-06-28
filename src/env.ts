@@ -33,6 +33,7 @@ export async function bootStrap() {
 
     if (!process.env.CORS)
       return error("CORS variable is missing from env");
+    console.log(dotenvResult.parsed);
 
   } catch (e) {
     console.error(e);

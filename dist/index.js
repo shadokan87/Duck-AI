@@ -24,7 +24,6 @@ app.get("/", (req, res) => {
 app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
     const init = yield (0, env_1.bootStrap)();
     (0, services_1.addService)("openai", openai_1.default, { apiKey: process.env.OPENAI_API_KEY });
-    console.log(process.env);
     if (init)
         process.exit(init);
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
