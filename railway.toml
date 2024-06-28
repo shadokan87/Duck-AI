@@ -1,5 +1,6 @@
 [build]
 builder = "NIXPACKS"
+buildCommand = "bun run build"
 
 [build.nixpacksPlan.phases.install]
 dependsOn = ["setup"]
