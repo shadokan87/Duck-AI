@@ -1,12 +1,13 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import { bootStrap } from "./env";
-import { Iservices, addService, services } from "./services";
+import { Iservices, addService, services as servicesNonStatic } from "./services";
 import OpenAI from "openai";
 import z from "zod";
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
+const services = servicesNonStatic as Iservices;
 
 
 app.get("/", (req: Request, res: Response) => {
