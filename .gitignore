@@ -2,4 +2,4 @@
 .env*
 .flaskenv*
 !.env.project
-!.env.vault
+!.env.vaultnode_modules
