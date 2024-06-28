@@ -1,0 +1,7 @@
+dist
+src
+tsconfig.json
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
