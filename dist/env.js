@@ -17,7 +17,11 @@ const zod_1 = __importDefault(require("zod"));
 const dotenv_vault_1 = require("dotenv-vault");
 // Env
 const envVariables = zod_1.default.object({
-    OPENAI_API_KEY: zod_1.default.string()
+    OPENAI_API_KEY: zod_1.default.string(),
+    CORS: zod_1.default.string(),
+    SUPABASE_URL: zod_1.default.string(),
+    SUPABASE_JWT_SECRET: zod_1.default.string(),
+    SUPABASE_SERVICE_ROLE: zod_1.default.string()
 });
 function error(...args) {
     console.error(args);

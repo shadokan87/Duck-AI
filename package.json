@@ -19,9 +19,16 @@
   "author": "Joe Previte<jjprevite@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@supabase/supabase-js": "^2.44.2",
+    "@types/axios": "^0.14.0",
+    "@types/cors": "^2.8.17",
+    "@types/jsonwebtoken": "^9.0.6",
+    "axios": "^1.7.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.2",
     "dotenv-vault": "^1.26.2",
     "express": "^4.18.1",
+    "jsonwebtoken": "^9.0.2",
     "openai": "^4.52.1",
     "zod": "^3.23.8"
   },

@@ -3,7 +3,11 @@ import { config } from 'dotenv-vault'
 
 // Env
 const envVariables = z.object({
-  OPENAI_API_KEY: z.string()
+  OPENAI_API_KEY: z.string(),
+  CORS: z.string(),
+  SUPABASE_URL: z.string(),
+  SUPABASE_JWT_SECRET: z.string(),
+  SUPABASE_SERVICE_ROLE: z.string()
 });
 
 declare global {

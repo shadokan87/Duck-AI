@@ -4,3 +4,5 @@
 !.env.project
 !.env.vaultnode_modules
 node_modules
+
+!.env.vault
