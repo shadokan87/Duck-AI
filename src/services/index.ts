@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { TaskScheduler } from "./taskSchedulerService";
 
 /**
  * Interface for services.
@@ -6,7 +7,8 @@ import OpenAI from "openai";
  * Every services available in the app must be declared in this interface
  */
 export interface Iservices {
-  openai: OpenAI
+  openai: OpenAI,
+  scheduler: TaskScheduler
 }
 
 export let services: Partial<Iservices> = {};
