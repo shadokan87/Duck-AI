@@ -1,15 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskScheduler = void 0;
+/**
+ * Class representing a task scheduler.
+ */
 class TaskScheduler {
     constructor() {
         this.queue = [];
         this.active = false;
         this.startBackgroundTask();
     }
+    /**
+     * Adds a task to the queue.
+     * @param task - The task to be added.
+     */
     addTask(task) {
         this.queue.push(task);
     }
+    /**
+     * Processes the task queue.
+     * @returns {boolean} - Indicates whether a task was processed.
+     */
     processQueue() {
         if (this.active || this.queue.length === 0) {
             return false; // Indicate that no task was processed
@@ -24,6 +35,9 @@ class TaskScheduler {
         }
         return true; // Indicate that a task was processed
     }
+    /**
+     * Starts the background task to process the queue.
+     */
     startBackgroundTask() {
         const backgroundTask = () => {
             const didWork = this.processQueue();

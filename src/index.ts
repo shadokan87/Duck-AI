@@ -9,11 +9,13 @@ import * as jwt from 'jsonwebtoken';
 import { Database } from "./types/supabase";
 import { DecodedUser } from "./types/decoded";
 import { createClient } from "@supabase/supabase-js";
+import { handleOpenAiCompletion } from "./openai";
+import { TaskScheduler } from "./services/taskSchedulerService";
 
 const app: Express = express().use(cors({ origin: process.env.CORS })).use(express.json());
 const port = process.env.PORT || 3000;
 const services = servicesNonStatic as Iservices;
-const supabase = createClient<Database>(
+export const supabase = createClient<Database>(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE
 );
@@ -71,6 +73,7 @@ app.post("/prompt", async (req: Request, res: Response) => {
 
 const queueTaskBodySchema = z.object({
   task_id: z.number(),
+  project_root: z.string()
 });
 
 app.post("/queue", async (req: Request, res: Response) => {
@@ -89,14 +92,22 @@ app.post("/queue", async (req: Request, res: Response) => {
   }
   const taskBody = queueTaskBodySchema.safeParse(req.body);
   if (!taskBody.success) {
+    console.log("!err body", taskBody.error);
     res.status(400).send(taskBody.error);
     return;
   }
   try {
     const updateResponse = await supabase.from('task').update({ state: 'QUEUE' }).eq('id', taskBody.data.task_id);
+    services.scheduler.addTask({
+      running: false,
+      callback: async () => {
+        await handleOpenAiCompletion(taskBody.data.task_id, taskBody.data.project_root);
+      }
+    });
     if (updateResponse.error)
       throw new Error("Unexpected error");
   } catch (e) {
+    console.error(e);
     res.status(500).send(e);
     return;
   }
@@ -110,6 +121,7 @@ app.get("/", (req: Request, res: Response) => {
 app.listen(port, async () => {
   const init = await bootStrap();
   addService("openai", OpenAI, { apiKey: process.env.OPENAI_API_KEY });
+  addService("scheduler", TaskScheduler);
   if (init)
     process.exit(init);
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);

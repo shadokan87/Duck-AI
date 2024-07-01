@@ -1,8 +1,14 @@
+/**
+ * Interface representing a task.
+ */
 export interface Itask {
   running: boolean;
   callback: () => void;
 }
 
+/**
+ * Class representing a task scheduler.
+ */
 export class TaskScheduler {
   private queue: Itask[] = [];
   private active: boolean = false;
@@ -11,10 +17,18 @@ export class TaskScheduler {
     this.startBackgroundTask();
   }
 
+  /**
+   * Adds a task to the queue.
+   * @param task - The task to be added.
+   */
   addTask(task: Itask) {
     this.queue.push(task);
   }
 
+  /**
+   * Processes the task queue.
+   * @returns {boolean} - Indicates whether a task was processed.
+   */
   private processQueue() {
     if (this.active || this.queue.length === 0) {
       return false; // Indicate that no task was processed
@@ -30,6 +44,9 @@ export class TaskScheduler {
     return true; // Indicate that a task was processed
   }
 
+  /**
+   * Starts the background task to process the queue.
+   */
   private startBackgroundTask() {
     const backgroundTask = () => {
       const didWork = this.processQueue();
